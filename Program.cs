@@ -36,15 +36,14 @@ namespace AppEFThreading
             var task = empTask.GetAll();
             
             task.Wait();
-
+            
             var lis = task.Result;
 
             foreach (var item in lis)
             {
                 Console.WriteLine(item.FirstName);
             }
-
-           
+                       
             Console.ReadKey();
         }
     }
