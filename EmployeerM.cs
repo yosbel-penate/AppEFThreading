@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Windows.Forms;
 
 namespace AppEFThreading
 {
@@ -11,69 +9,92 @@ namespace AppEFThreading
     {
         private bool multiThreaded;
         AdventureWorksDW2019Entities ctx;
-        private const int TimeDelay= 300;
+        private const int TimeOut = 300;
 
         public EmployeerM(bool _multiThreaded)
         {
             multiThreaded = _multiThreaded;
         }
 
-        public EmployeerM():this(false)
+        public EmployeerM() : this(false)
         {
             ctx = new AdventureWorksDW2019Entities();
-            ctx.Database.CommandTimeout = TimeDelay;
+            ctx.Database.CommandTimeout = TimeOut;
         }
 
         public IEnumerable<DimEmployee> GetAll()
         {
-            if (multiThreaded)
+            try
             {
-                using (AdventureWorksDW2019Entities ctx = new AdventureWorksDW2019Entities())
+                if (multiThreaded)
                 {
-                    ctx.Database.CommandTimeout = TimeDelay;
+                    using (AdventureWorksDW2019Entities ctx = new AdventureWorksDW2019Entities())
+                    {
+                        ctx.Database.CommandTimeout = TimeOut;
+                        return ctx.DimEmployees.ToList();
+                    }
+                }
+                else
+                {
+
                     return ctx.DimEmployees.ToList();
                 }
             }
-            else
+            catch (EntityException)
             {
-                return ctx.DimEmployees.ToList();
+                throw;
             }
         }
 
         public DimEmployee GetEmployeerById(int id)
         {
-            if (multiThreaded)
+            try
             {
-                using (AdventureWorksDW2019Entities ctx = new AdventureWorksDW2019Entities())
+                if (multiThreaded)
                 {
-                    ctx.Database.CommandTimeout = TimeDelay;
+                    using (AdventureWorksDW2019Entities ctx = new AdventureWorksDW2019Entities())
+                    {
+                        ctx.Database.CommandTimeout = TimeOut;
+                        return ctx.DimEmployees.SingleOrDefault(d => d.EmployeeKey == id);
+                    }
+                }
+                else
+                {
                     return ctx.DimEmployees.SingleOrDefault(d => d.EmployeeKey == id);
                 }
             }
-            else
+            catch (EntityCommandExecutionException entityCommandExecutionException)
             {
-                return ctx.DimEmployees.SingleOrDefault(d => d.EmployeeKey == id);
+                throw;
             }
+
         }
 
         public DimEmployee Create(DimEmployee employeer)
         {
-            if (multiThreaded)
+            try
             {
-                using (AdventureWorksDW2019Entities ctx = new AdventureWorksDW2019Entities())
+                if (multiThreaded)
                 {
-                    ctx.Database.CommandTimeout = TimeDelay;
+                    using (AdventureWorksDW2019Entities ctx = new AdventureWorksDW2019Entities())
+                    {
+                        ctx.Database.CommandTimeout = TimeOut;
+                        return _CreateEmployeer(employeer, ctx);
+                    }
+                }
+                else
+                {
                     return _CreateEmployeer(employeer, ctx);
                 }
             }
-            else
+            catch (EntityCommandExecutionException entityCommandExecutionException)
             {
-                return _CreateEmployeer(employeer, ctx);
+                throw;
             }
 
             DimEmployee _CreateEmployeer(DimEmployee _employeer, AdventureWorksDW2019Entities _ctx)
             {
-                _ctx.Database.CommandTimeout = TimeDelay;
+                _ctx.Database.CommandTimeout = TimeOut;
                 _ctx.DimEmployees.Add(_employeer);
                 _ctx.SaveChanges();
                 return _employeer;
