@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AdventureWorksDW2019Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DimCurrency">
+          <Key>
+            <PropertyRef Name="CurrencyKey" />
+          </Key>
+          <Property Name="CurrencyKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CurrencyAlternateKey" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="CurrencyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DimEmployee">
+          <Key>
+            <PropertyRef Name="EmployeeKey" />
+          </Key>
+          <Property Name="EmployeeKey" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentEmployeeKey" Type="int" />
+          <Property Name="EmployeeNationalIDAlternateKey" Type="nvarchar" MaxLength="15" />
+          <Property Name="ParentEmployeeNationalIDAlternateKey" Type="nvarchar" MaxLength="15" />
+          <Property Name="SalesTerritoryKey" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="NameStyle" Type="bit" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="HireDate" Type="date" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="LoginID" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="25" />
+          <Property Name="MaritalStatus" Type="nchar" MaxLength="1" />
+          <Property Name="EmergencyContactName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmergencyContactPhone" Type="nvarchar" MaxLength="25" />
+          <Property Name="SalariedFlag" Type="bit" />
+          <Property Name="Gender" Type="nchar" MaxLength="1" />
+          <Property Name="PayFrequency" Type="tinyint" />
+          <Property Name="BaseRate" Type="money" />
+          <Property Name="VacationHours" Type="smallint" />
+          <Property Name="SickLeaveHours" Type="smallint" />
+          <Property Name="CurrentFlag" Type="bit" Nullable="false" />
+          <Property Name="SalesPersonFlag" Type="bit" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmployeePhoto" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_DimEmployee_DimEmployee">
+          <End Role="DimEmployee" Type="Self.DimEmployee" Multiplicity="0..1" />
+          <End Role="DimEmployee1" Type="Self.DimEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DimEmployee">
+              <PropertyRef Name="EmployeeKey" />
+            </Principal>
+            <Dependent Role="DimEmployee1">
+              <PropertyRef Name="ParentEmployeeKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AdventureWorksDW2019ModelStoreContainer">
+          <EntitySet Name="DimCurrency" EntityType="Self.DimCurrency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DimEmployee" EntityType="Self.DimEmployee" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DimEmployee_DimEmployee" Association="Self.FK_DimEmployee_DimEmployee">
+            <End Role="DimEmployee" EntitySet="DimEmployee" />
+            <End Role="DimEmployee1" EntitySet="DimEmployee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AdventureWorksDW2019Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DimCurrency">
+          <Key>
+            <PropertyRef Name="CurrencyKey" />
+          </Key>
+          <Property Name="CurrencyKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CurrencyAlternateKey" Type="String" MaxLength="3" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CurrencyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DimEmployee">
+          <Key>
+            <PropertyRef Name="EmployeeKey" />
+          </Key>
+          <Property Name="EmployeeKey" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentEmployeeKey" Type="Int32" />
+          <Property Name="EmployeeNationalIDAlternateKey" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ParentEmployeeNationalIDAlternateKey" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="SalesTerritoryKey" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NameStyle" Type="Boolean" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HireDate" Type="DateTime" Precision="0" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="LoginID" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="MaritalStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="EmergencyContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmergencyContactPhone" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="SalariedFlag" Type="Boolean" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="PayFrequency" Type="Byte" />
+          <Property Name="BaseRate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="VacationHours" Type="Int16" />
+          <Property Name="SickLeaveHours" Type="Int16" />
+          <Property Name="CurrentFlag" Type="Boolean" Nullable="false" />
+          <Property Name="SalesPersonFlag" Type="Boolean" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="DimEmployee1" Relationship="Self.FK_DimEmployee_DimEmployee" FromRole="DimEmployee" ToRole="DimEmployee1" />
+          <NavigationProperty Name="DimEmployee2" Relationship="Self.FK_DimEmployee_DimEmployee" FromRole="DimEmployee1" ToRole="DimEmployee" />
+        </EntityType>
+        <Association Name="FK_DimEmployee_DimEmployee">
+          <End Role="DimEmployee" Type="Self.DimEmployee" Multiplicity="0..1" />
+          <End Role="DimEmployee1" Type="Self.DimEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DimEmployee">
+              <PropertyRef Name="EmployeeKey" />
+            </Principal>
+            <Dependent Role="DimEmployee1">
+              <PropertyRef Name="ParentEmployeeKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AdventureWorksDW2019Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DimCurrencies" EntityType="Self.DimCurrency" />
+          <EntitySet Name="DimEmployees" EntityType="Self.DimEmployee" />
+          <AssociationSet Name="FK_DimEmployee_DimEmployee" Association="Self.FK_DimEmployee_DimEmployee">
+            <End Role="DimEmployee" EntitySet="DimEmployees" />
+            <End Role="DimEmployee1" EntitySet="DimEmployees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AdventureWorksDW2019ModelStoreContainer" CdmEntityContainer="AdventureWorksDW2019Entities">
+          <EntitySetMapping Name="DimCurrencies">
+            <EntityTypeMapping TypeName="AdventureWorksDW2019Model.DimCurrency">
+              <MappingFragment StoreEntitySet="DimCurrency">
+                <ScalarProperty Name="CurrencyKey" ColumnName="CurrencyKey" />
+                <ScalarProperty Name="CurrencyAlternateKey" ColumnName="CurrencyAlternateKey" />
+                <ScalarProperty Name="CurrencyName" ColumnName="CurrencyName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DimEmployees">
+            <EntityTypeMapping TypeName="AdventureWorksDW2019Model.DimEmployee">
+              <MappingFragment StoreEntitySet="DimEmployee">
+                <ScalarProperty Name="EmployeeKey" ColumnName="EmployeeKey" />
+                <ScalarProperty Name="ParentEmployeeKey" ColumnName="ParentEmployeeKey" />
+                <ScalarProperty Name="EmployeeNationalIDAlternateKey" ColumnName="EmployeeNationalIDAlternateKey" />
+                <ScalarProperty Name="ParentEmployeeNationalIDAlternateKey" ColumnName="ParentEmployeeNationalIDAlternateKey" />
+                <ScalarProperty Name="SalesTerritoryKey" ColumnName="SalesTerritoryKey" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="NameStyle" ColumnName="NameStyle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="EmergencyContactName" ColumnName="EmergencyContactName" />
+                <ScalarProperty Name="EmergencyContactPhone" ColumnName="EmergencyContactPhone" />
+                <ScalarProperty Name="SalariedFlag" ColumnName="SalariedFlag" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="PayFrequency" ColumnName="PayFrequency" />
+                <ScalarProperty Name="BaseRate" ColumnName="BaseRate" />
+                <ScalarProperty Name="VacationHours" ColumnName="VacationHours" />
+                <ScalarProperty Name="SickLeaveHours" ColumnName="SickLeaveHours" />
+                <ScalarProperty Name="CurrentFlag" ColumnName="CurrentFlag" />
+                <ScalarProperty Name="SalesPersonFlag" ColumnName="SalesPersonFlag" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EmployeePhoto" ColumnName="EmployeePhoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
